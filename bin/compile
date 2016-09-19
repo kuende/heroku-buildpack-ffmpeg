@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
+arrow() {
+  sed -u 's/^/-----> /'
+}
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENVFILE=$3
+BP_DIR=`cd $(dirname $0); cd ..; pwd`
+
+echo "Installing ffmpeg" | arrow
+
+cd $BUILD_DIR
+
+output_dir="${BUILD_DIR}/vendor/ffmpeg"
+# Output library also to temp dir accordingly to pkg-config paths
+temp_app_dir="/app/vendor/ffmpeg"
+mkdir -p $output_dir
+mkdir -p $temp_app_dir
+
+echo "Downloading libvips and unpacking" | indent
+curl -sL https://dl.bintray.com/nvartolomei/heroku-buildpack-ffmpeg/ffmpeg-3.1.3.tar.gz | tar xz -C $output_dir
+
+if [ $? != 0 ]; then
+  echo "Error downloading ffmpeg and unpacking to build dir" | indent
+  exit 1
+fi
+
+curl -sL https://dl.bintray.com/nvartolomei/heroku-buildpack-ffmpeg/ffmpeg-3.1.3.tar.gz | tar xz -C $temp_app_dir
+
+if [ $? != 0 ]; then
+  echo "Error downloading ffmpeg and unpacking to app dir" | indent
+  exit 1
+fi
+mkdir -p $BUILD_DIR/bin/
+cp -r $output_dir/bin/* $BUILD_DIR/bin/
+
+echo "ffmpeg installed" | indent
+

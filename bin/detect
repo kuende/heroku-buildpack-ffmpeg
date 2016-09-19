@@ -1,0 +1,5 @@
+#! /bin/bash
+
+# Always use when requested
+echo FFMPEG
+exit 0
