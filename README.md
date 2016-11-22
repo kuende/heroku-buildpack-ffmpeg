@@ -25,6 +25,9 @@ pushd ffmpeg-3.1.3
   --disable-postproc                                        \
   --disable-filters                                         \
   --enable-filter=aresample                                 \
+  --enable-filter=rotate                                    \
+  --enable-filter=transpose                                 \
+  --enable-filter=metadata                                  \
   --disable-muxers                                          \
   --enable-muxer=null                                       \
   --disable-debug                                           \
