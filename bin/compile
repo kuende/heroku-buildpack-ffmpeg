@@ -29,21 +29,14 @@ mkdir -p $output_dir
 mkdir -p $temp_app_dir
 
 echo "Downloading ffmpeg and unpacking" | indent
-curl -sL https://dl.bintray.com/nvartolomei/heroku-buildpack-ffmpeg/ffmpeg-3.1.3.tar.gz | tar xz -C $output_dir
+curl -sL https://dl.bintray.com/nvartolomei/heroku-buildpack-ffmpeg/ffmpeg-3.1.4.tar.gz | tar xz -C $output_dir
 
 if [ $? != 0 ]; then
   echo "Error downloading ffmpeg and unpacking to build dir" | indent
   exit 1
 fi
 
-curl -sL https://dl.bintray.com/nvartolomei/heroku-buildpack-ffmpeg/ffmpeg-3.1.3.tar.gz | tar xz -C $temp_app_dir
-
-if [ $? != 0 ]; then
-  echo "Error downloading ffmpeg and unpacking to app dir" | indent
-  exit 1
-fi
 mkdir -p $BUILD_DIR/bin/
 cp -r $output_dir/bin/* $BUILD_DIR/bin/
 
 echo "ffmpeg installed" | indent
-
