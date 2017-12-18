@@ -46,5 +46,5 @@ tar -cvzf output.tar.gz *
 ## Uploading
 
 ```
-curl -T output.tar.gz -unvartolomei:<API_KEY> https://api.bintray.com/content/nvartolomei/heroku-buildpack-ffmpeg/ffmpeg/3.1.4/ffmpeg-3.1.4.tar.gz
+gsutil cp output.tar.gz gs://kuende-staging1-bin/ffmpeg/ffmpeg.tar.gz
 ```
