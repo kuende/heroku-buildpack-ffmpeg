@@ -30,7 +30,12 @@ mkdir -p $temp_app_dir
 
 echo "Downloading ffmpeg and unpacking" | indent
 
-FFMPEG_URL="gs://kuende-staging1-bin/ffmpeg/ffmpeg.tar.gz"
+if [[ -z $FFMPEG_URL ]]
+then
+  echo "FFMPEG_URL must be set" | indent
+  exit 1
+fi
+
 GOOGLE_APPLICATION_CREDENTIALS=$VESSEL_GOOGLE_APPLICATION_CREDENTIALS vessel-downloader ${FFMPEG_URL} /tmp/ffmpeg.tgz
 
 if [ $? != 0 ]; then
